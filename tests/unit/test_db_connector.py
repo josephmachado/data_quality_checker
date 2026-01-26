@@ -1,11 +1,15 @@
+
 import sqlite3
 from datetime import datetime
+from pathlib import Path
+from pytest import CaptureFixture
+
 
 from data_quality_checker.connector.output_log import DBConnector
 
 
 class TestDBConnector:
-    def test_init_creates_database_file(self, temp_db_path):
+    def test_init_creates_database_file(self, temp_db_path: Path) -> None:
         """Test that initializing DBConnector creates the database file"""
         assert not temp_db_path.exists()
 
@@ -13,7 +17,7 @@ class TestDBConnector:
 
         assert temp_db_path.exists()
 
-    def test_init_creates_log_table(self, db_connector, temp_db_path):
+    def test_init_creates_log_table(self, db_connector: DBConnector, temp_db_path: Path) -> None:
         """Test that initializing DBConnector creates the log table"""
         conn = sqlite3.connect(str(temp_db_path))
         cursor = conn.cursor()
@@ -28,7 +32,7 @@ class TestDBConnector:
         assert result is not None
         assert result[0] == "log"
 
-    def test_log_table_has_correct_schema(self, db_connector, temp_db_path):
+    def test_log_table_has_correct_schema(self, db_connector: DBConnector, temp_db_path: Path) -> None:
         """Test that the log table has the correct columns"""
         conn = sqlite3.connect(str(temp_db_path))
         cursor = conn.cursor()
@@ -48,7 +52,7 @@ class TestDBConnector:
 
         assert column_names == expected_columns
 
-    def test_log_inserts_record_with_result_true(self, db_connector, temp_db_path):
+    def test_log_inserts_record_with_result_true(self, db_connector: DBConnector, temp_db_path: Path) -> None:
         """Test that log method inserts a record with result=True"""
         db_connector.log(
             "is_column_unique", True, column="test_col", table="test_table"
@@ -66,7 +70,7 @@ class TestDBConnector:
         assert "column" in rows[0][4]
         assert "test_col" in rows[0][4]
 
-    def test_log_inserts_record_with_result_false(self, db_connector, temp_db_path):
+    def test_log_inserts_record_with_result_false(self, db_connector: DBConnector, temp_db_path: Path) -> None:
         """Test that log method inserts a record with result=False"""
         db_connector.log("is_column_not_null", False, column="test_col", null_count=5)
 
@@ -81,7 +85,7 @@ class TestDBConnector:
         assert rows[0][3] == 0  # False stored as 0
         assert "null_count" in rows[0][4]
 
-    def test_log_inserts_multiple_records(self, db_connector, temp_db_path):
+    def test_log_inserts_multiple_records(self, db_connector: DBConnector, temp_db_path: Path) -> None:
         """Test that multiple log calls insert multiple records"""
         db_connector.log("is_column_unique", True, column="col1")
         db_connector.log("is_column_not_null", False, column="col2")
@@ -98,7 +102,7 @@ class TestDBConnector:
         assert rows[1][2] == "is_column_not_null"
         assert rows[2][2] == "is_column_enum"
 
-    def test_log_stores_timestamp(self, db_connector, temp_db_path):
+    def test_log_stores_timestamp(self, db_connector: DBConnector, temp_db_path: Path) -> None:
         """Test that log method stores a timestamp"""
         before_time = datetime.now()
         db_connector.log("is_column_unique", True, column="test_col")
@@ -113,7 +117,7 @@ class TestDBConnector:
         timestamp = datetime.fromisoformat(row[0])
         assert before_time <= timestamp <= after_time
 
-    def test_log_stores_additional_params_as_string(self, db_connector, temp_db_path):
+    def test_log_stores_additional_params_as_string(self, db_connector: DBConnector, temp_db_path: Path) -> None:
         """Test that additional params are stored as string"""
         db_connector.log(
             "is_column_enum",
@@ -136,8 +140,8 @@ class TestDBConnector:
         assert "enum_values" in params
 
     def test_log_stores_none_when_no_additional_params(
-        self, db_connector, temp_db_path
-    ):
+        self, db_connector: DBConnector, temp_db_path: Path
+    ) -> None:
         """Test that additional_params is None when no kwargs provided"""
         db_connector.log("is_column_unique", True)
 
@@ -149,7 +153,7 @@ class TestDBConnector:
 
         assert row[0] is None
 
-    def test_log_with_all_check_types(self, db_connector, temp_db_path):
+    def test_log_with_all_check_types(self, db_connector: DBConnector, temp_db_path: Path) -> None:
         """Test logging all different check types"""
         check_types = [
             "is_column_unique",
@@ -159,7 +163,7 @@ class TestDBConnector:
         ]
 
         for check_type in check_types:
-            db_connector.log(check_type, True, column="test")
+            db_connector.log(check_type, True, column="test") # type: ignore
 
         conn = sqlite3.connect(str(temp_db_path))
         cursor = conn.cursor()
@@ -170,14 +174,14 @@ class TestDBConnector:
         logged_types = [row[0] for row in rows]
         assert logged_types == check_types
 
-    def test_print_all_logs_with_no_logs(self, db_connector, capsys):
+    def test_print_all_logs_with_no_logs(self, db_connector: DBConnector, capsys: CaptureFixture[str]) -> None:
         """Test print_all_logs when database is empty"""
         db_connector.print_all_logs()
 
         captured = capsys.readouterr()
         assert "No log entries found." in captured.out
 
-    def test_print_all_logs_displays_records(self, db_connector, capsys):
+    def test_print_all_logs_displays_records(self, db_connector: DBConnector, capsys: CaptureFixture[str]) -> None:
         """Test print_all_logs displays all records"""
         db_connector.log("is_column_unique", True, column="col1")
         db_connector.log("is_column_not_null", False, column="col2")
@@ -192,7 +196,7 @@ class TestDBConnector:
         assert "col1" in captured.out
         assert "col2" in captured.out
 
-    def test_print_all_logs_shows_correct_result_format(self, db_connector, capsys):
+    def test_print_all_logs_shows_correct_result_format(self, db_connector: DBConnector, capsys: CaptureFixture[str]) -> None:
         """Test that print_all_logs shows PASS/FAIL correctly"""
         db_connector.log("is_column_unique", True, column="test")
         db_connector.log("is_column_not_null", False, column="test")
@@ -212,7 +216,7 @@ class TestDBConnector:
         assert any("PASS" in line for line in data_lines)
         assert any("FAIL" in line for line in data_lines)
 
-    def test_print_all_logs_orders_by_id(self, db_connector, capsys):
+    def test_print_all_logs_orders_by_id(self, db_connector: DBConnector, capsys: CaptureFixture[str]) -> None:
         """Test that print_all_logs displays records in order by id"""
         db_connector.log("is_column_unique", True, column="first")
         db_connector.log("is_column_not_null", False, column="second")
@@ -229,7 +233,7 @@ class TestDBConnector:
 
         assert first_pos < second_pos < third_pos
 
-    def test_multiple_instances_share_same_database(self, temp_db_path):
+    def test_multiple_instances_share_same_database(self, temp_db_path: Path) -> None:
         """Test that multiple DBConnector instances can access the same database"""
         connector1 = DBConnector(temp_db_path)
         connector1.log("is_column_unique", True, column="test1")
@@ -245,7 +249,7 @@ class TestDBConnector:
 
         assert count == 2
 
-    def test_log_handles_special_characters_in_params(self, db_connector, temp_db_path):
+    def test_log_handles_special_characters_in_params(self, db_connector: DBConnector, temp_db_path: Path) -> None:
         """Test that log handles special characters in additional params"""
         db_connector.log(
             "is_column_enum",
@@ -263,7 +267,7 @@ class TestDBConnector:
         assert row[0] is not None
         assert "test's column" in row[0]
 
-    def test_log_handles_empty_kwargs(self, db_connector, temp_db_path):
+    def test_log_handles_empty_kwargs(self, db_connector: DBConnector, temp_db_path: Path) -> None:
         """Test that log handles empty kwargs dict"""
         db_connector.log("is_column_unique", True, **{})
 
@@ -275,7 +279,7 @@ class TestDBConnector:
 
         assert row[0] is None
 
-    def test_autoincrement_id_works(self, db_connector, temp_db_path):
+    def test_autoincrement_id_works(self, db_connector: DBConnector, temp_db_path: Path) -> None:
         """Test that id field auto-increments correctly"""
         db_connector.log("is_column_unique", True)
         db_connector.log("is_column_not_null", False)

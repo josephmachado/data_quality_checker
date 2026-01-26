@@ -9,7 +9,7 @@ class DBConnector:
     and log data to a log table
     """
 
-    def __init__(self, db_file: Path):
+    def __init__(self, db_file: Path) -> None:
         """Function to initialize a sqlite3 db on the given db_file
 
         Args:
@@ -18,7 +18,7 @@ class DBConnector:
         self.db_file = db_file
         self._create_log_table()
 
-    def _create_log_table(self):
+    def _create_log_table(self) -> None:
         """Create the log table if it doesn't exist"""
         conn = sqlite3.connect(str(self.db_file))
         cursor = conn.cursor()
@@ -41,10 +41,11 @@ class DBConnector:
             "is_column_not_null",
             "is_column_enum",
             "are_tables_referential_integral",
+            "is_column_in_data",
         ],
         result: bool,
         **kwargs: Any,
-    ):
+    ) -> None:
         """Function to load the results into a log table, with ts of when data is inserted
 
         Args:
@@ -67,7 +68,7 @@ class DBConnector:
         conn.commit()
         conn.close()
 
-    def print_all_logs(self):
+    def print_all_logs(self) -> None:
         """Print all log entries in the table"""
         conn = sqlite3.connect(str(self.db_file))
         cursor = conn.cursor()
