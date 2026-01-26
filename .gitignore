@@ -14,3 +14,7 @@ quality_checks.db
 
 # marimo 
 __marimo__
+
+# test coverage 
+htmlcov/
+.coverage
