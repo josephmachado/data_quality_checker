@@ -1,7 +1,5 @@
 import pytest
-
 from data_quality_checker.main import DataQualityChecker
-
 from data_quality_checker.connector.output_log import DBConnector
 
 

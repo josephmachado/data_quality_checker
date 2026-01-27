@@ -140,6 +140,48 @@ Don't forget to remove the quality_checks.db file after running the example.
 rm -rf quality_checks.db
 ```
 
+### CLI Usage
+
+The library also exposes a CLI tool `dqc` that supports all the checks. 
+If you installed via `pip`, you can use `dqc` directly. If you are using `uv`, prefix with `uv run`.
+
+#### Key Flags
+- `--data`: Path to the input file.
+- `--column`: Name of the primary column to check.
+- `--db-path`: (Optional) Path to the SQLite DB (default: `quality_checks.db`).
+
+#### Examples
+
+**Check for Uniqueness**
+```bash
+uv run dqc check-unique --data users.csv --column user_id
+```
+
+**Check for Non-Null Values**
+```bash
+uv run dqc check-not-null --data users.csv --column age
+```
+
+**Check Enum Values** (comma-separated list for valuse)
+```bash
+uv run dqc check-enum --data users.csv --column status --enum-values active,inactive,pending
+```
+
+**Check Referential Integrity**
+```bash
+uv run dqc check-references --data orders.csv --reference users.csv --join-keys user_id
+```
+
+**Check Column Existence**
+```bash
+uv run dqc check-column-exists --data users.csv --column email
+```
+
+**View Logs**
+```bash
+uv run dqc show-logs
+```
+
 ## API Reference
 
 ### DataQualityChecker

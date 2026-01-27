@@ -9,7 +9,11 @@ authors = [
 requires-python = ">=3.13"
 dependencies = [
     "duckdb>=1.4.3",
+    "typer>=0.21.1",
 ]
+
+[project.scripts]
+dqc = "data_quality_checker.cli:app"
 
 [build-system]
 requires = ["hatchling"]
