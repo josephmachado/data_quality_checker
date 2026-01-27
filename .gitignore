@@ -18,3 +18,4 @@ __marimo__
 # test coverage 
 htmlcov/
 .coverage
+coverage.xml

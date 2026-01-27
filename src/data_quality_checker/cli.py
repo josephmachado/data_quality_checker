@@ -1,8 +1,6 @@
 from pathlib import Path
-from typing import List, Optional
 import typer
 from rich.console import Console
-from rich.table import Table
 
 from data_quality_checker.connector.output_log import DBConnector
 from data_quality_checker.main import DataQualityChecker
