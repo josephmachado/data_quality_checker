@@ -6,7 +6,7 @@ A Python library for validating data quality or small to medium (< 50GB) dataset
 
 ### From PyPI
 ```bash
-pip install data-quality-checker
+pip install --index-url https://test.pypi.org/simple/ data-quality-checker
 ```
 
 ### From Source
