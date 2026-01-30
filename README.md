@@ -12,8 +12,8 @@ pip install --index-url https://test.pypi.org/simple/ data-quality-checker
 ### From Source
 ```bash
 # Clone the repository
-git clone https://github.com/josephmachado/data-quality-checker.git
-cd data-quality-checker
+git clone https://github.com/josephmachado/data_quality_checker.git
+cd data_quality_checker
 
 # Install with uv
 uv sync
