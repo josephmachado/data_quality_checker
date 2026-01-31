@@ -18,7 +18,7 @@ A CLI tool and library for validating data quality on small to medium (< 50GB) d
 4.  **Referential Integrity**: Checks if values in a column exist in a reference table's column.
 5.  **Column Existence**: Validates that a specific column exists in the dataset.
 
-## Installation (Go - Recommended)
+## Installation
 
 ### Prerequisites
 - Go >= 1.20
