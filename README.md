@@ -10,6 +10,18 @@ A CLI tool and library for validating data quality on small to medium (< 50GB) d
 - **Zero-Row Success Model**: Validation logic returns 0 rows on success and 1 or more rows on failure.
 - **SQLite Logging**: Automated logging of all validation results with detailed metadata and timestamps.
 
+### Releasing New Versions
+
+Releases are managed via GitHub Actions and can be triggered manually:
+
+1.  Navigate to the **Actions** tab in the GitHub repository.
+2.  Select the **Manual Release** workflow from the left sidebar.
+3.  Click **Run workflow**.
+4.  Enter the `tag_name` (e.g., `v1.2.0`) and an optional `release_name`.
+5.  Click **Run workflow** to build the binary and create a GitHub Release automatically.
+
+## License
+
 ### Included Data Quality Checks
 
 1.  **Column Uniqueness**: Verifies if all values in a column are unique.

@@ -25,7 +25,15 @@ Go provides two standard ways for users to build your application from source:
 - **Cause**: Libraries like **DuckDB** are *statically linked*. This means the entire C++ library is embedded inside the Go binary.
 - **Benefit**: The binary is self-contained. The user does not need to install DuckDB separately; it "just works."
 
-### 4. Development Philosophy & Rules
+### 4. Manual Release via GitHub Actions
+- **Strategy**: Use `workflow_dispatch` to allow manual triggers of the release process.
+- **Benefits**:
+    - **Control**: Release only when feature sets are stable.
+    - **Automation**: Binary compilation and GitHub Release creation are handled by CI.
+    - **Inputs**: Users can specify the version tag (e.g., `v1.2.0`) at trigger time.
+- **Workflow Location**: `.github/workflows/release.yml`
+
+### 5. Development Philosophy & Rules
 
 **Agents must follow this Layered Architecture approach for all new features:**
 
