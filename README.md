@@ -25,6 +25,11 @@ A CLI tool and library for validating data quality on small to medium (< 50GB) d
 - GCC (refer to `go-duckdb` requirements)
 - `CGO_ENABLED=1`
 
+### Install with Go
+```bash
+go install github.com/josephmachado/data_quality_checker/cmd/dqc@latest
+```
+
 ### Build from Source
 ```bash
 # Clone the repository
