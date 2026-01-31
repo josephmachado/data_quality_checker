@@ -12,7 +12,8 @@ import (
 )
 
 var (
-	dbPath string
+	dbPath  string
+	version = "v1.1.0"
 )
 
 // main is the entry point for the Data Quality Checker CLI application
@@ -24,9 +25,10 @@ func main() {
 }
 
 var rootCmd = &cobra.Command{
-	Use:   "dqc",
-	Short: "Data Quality Checker CLI",
-	Long:  `A CLI tool for validating data quality on CSV/Parquet files using DuckDB.`,
+	Use:     "dqc",
+	Short:   "Data Quality Checker CLI",
+	Long:    `A CLI tool for validating data quality on CSV/Parquet files using DuckDB.`,
+	Version: version,
 }
 
 func init() {
