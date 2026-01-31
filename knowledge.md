@@ -38,3 +38,33 @@ Go provides two standard ways for users to build your application from source:
     *   **Rule**: Build the CLI/API only *after* the core logic is stable.
     *   **Constraint**: The `cmd` package is a *consumer*. It should only parse user input (flags, args) and call `internal/`. It should contain minimal logic.
     *   **Goal**: Keep entry points lightweight and swappable.
+
+### 5. Coding Rules
+
+**Agents must follow these standards when writing code:**
+
+1.  **Function Naming Pattern**
+    *   **Rule**: Use `VerbNoun` or `VerbAdjective` (PascalCase) for exported functions.
+    *   **Pattern**: Functions should describe an action or a check.
+    *   **Examples**:
+        *   `IsColumnUnique` (Check: Is [Subject] [Condition]?)
+        *   `Log` (Action: [Verb])
+        *   `createLogTable` (Internal: [Verb] [Object])
+    *   **Note**: Avoid generic names. Be specific about what the function does.
+
+2.  **Documentation Standards**
+    *   **Rule**: All exported functions must have comments explaining **What**, **Why**, and **How**.
+    *   **Format**: start with the function name.
+    *   **Example**:
+        ```go
+        // IsColumnUnique checks if the column values are unique (What).
+        // This ensures data integrity for primary keys (Why).
+        // It uses a GROUP BY SQL query to count duplicates (How).
+        func IsColumnUnique(...)
+        ```
+
+3.  **Documentation Maintenance**
+    *   **Rule**: Update `README.md` immediately if you add:
+        *   New features or flags.
+        *   New installation steps.
+        *   New architecture components.
