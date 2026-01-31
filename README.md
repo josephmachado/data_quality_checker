@@ -17,6 +17,18 @@ A CLI tool and library for validating data quality on small to medium (< 50GB) d
 3.  **Enum Validation**: Ensures a column only contains values from a predefined list.
 4.  **Referential Integrity**: Checks if values in a column exist in a reference table's column.
 5.  **Column Existence**: Validates that a specific column exists in the dataset.
+6.  **Value Range (`check-between`)**: Validates numeric values are within a [min, max] range.
+7.  **Regex Match (`check-regex`)**: Validates string values match a RE2 regex pattern.
+8.  **Type Validation (`check-type`)**: Checks if column data matches a specific DuckDB type.
+9.  **Length Range (`check-length`)**: Validates string/object lengths are within range.
+10. **Aggregate Bounds (`check-max`, `check-min`, `check-mean`, `check-median`)**: Validates aggregates are within range.
+11. **Date Format (`check-date-format`)**: Validates strings match a specific strftime format.
+12. **Table Row/Col Count (`check-row-count`, `check-col-count`)**: Validates table dimensions.
+13. **Blacklist Validation (`check-not-in-set`)**: Ensures values are NOT in a "blacklisted" set.
+14. **Ordering (`check-increasing`)**: Verifies values are in ascending order.
+15. **Date Parseability (`check-date-parseable`)**: Checks if values can be parsed as dates.
+16. **Column Level Equality (`check-pair-equal`)**: Compares two columns for equality per row.
+17. **Set Coverage (`check-distinct-in-set`)**: Checks if all unique values are within a set.
 
 ## Installation
 
