@@ -10,6 +10,7 @@ import (
 	_ "github.com/marcboeker/go-duckdb"
 )
 
+// DataQualityChecker provides methods to perform various data quality checks
 type DataQualityChecker struct {
 	dbConnector *db.DBConnector
 }
@@ -41,6 +42,8 @@ func (c *DataQualityChecker) validatePathExists(dataPath string) error {
 	return nil
 }
 
+// IsColumnUnique checks if the specified column in the data file contains unique values.
+// It returns true if all values are unique, false otherwise.
 func (c *DataQualityChecker) IsColumnUnique(dataPath, uniqueColumn string) (bool, error) {
 	if err := c.validatePathExists(dataPath); err != nil {
 		return false, err
@@ -78,6 +81,8 @@ func (c *DataQualityChecker) IsColumnUnique(dataPath, uniqueColumn string) (bool
 	return result, nil
 }
 
+// IsColumnNotNull checks if the specified column in the data file contains any null values.
+// It returns true if no null values are found, false otherwise.
 func (c *DataQualityChecker) IsColumnNotNull(dataPath, notNullColumn string) (bool, error) {
 	if err := c.validatePathExists(dataPath); err != nil {
 		return false, err
@@ -112,6 +117,8 @@ func (c *DataQualityChecker) IsColumnNotNull(dataPath, notNullColumn string) (bo
 	return result, nil
 }
 
+// IsColumnEnum checks if the values in the specified column are within the allowed enum values.
+// It returns true if all values are valid, false otherwise.
 func (c *DataQualityChecker) IsColumnEnum(dataPath, enumColumn string, enumValues []string) (bool, error) {
 	if err := c.validatePathExists(dataPath); err != nil {
 		return false, err
@@ -155,6 +162,8 @@ func (c *DataQualityChecker) IsColumnEnum(dataPath, enumColumn string, enumValue
 	return result, nil
 }
 
+// AreTablesReferentialIntegral checks if the foreign key relationships between two tables are valid.
+// It ensures that values in the joining columns of the data file exist in the reference file.
 func (c *DataQualityChecker) AreTablesReferentialIntegral(dataPath, referencePath string, joinKeys []string) (bool, error) {
 	if err := c.validatePathExists(dataPath); err != nil {
 		return false, err
@@ -210,6 +219,8 @@ func (c *DataQualityChecker) AreTablesReferentialIntegral(dataPath, referencePat
 	return result, nil
 }
 
+// IsColumnInData checks if the specified column exists in the data file.
+// It returns true if the column exists, false otherwise.
 func (c *DataQualityChecker) IsColumnInData(dataPath, columnName string) (bool, error) {
 	if err := c.validatePathExists(dataPath); err != nil {
 		// Log failure as well? Python code didn't exist validation for this specific logic explicitly before call inside IsColumnInData,

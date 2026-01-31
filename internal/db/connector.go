@@ -39,6 +39,7 @@ func NewDBConnector(dbPath string) *DBConnector {
 	return connector
 }
 
+// createLogTable creates the log table in the SQLite database if it doesn't exist
 func (c *DBConnector) createLogTable() error {
 	db, err := sql.Open("sqlite3", c.dbPath)
 	if err != nil {
@@ -62,7 +63,7 @@ func (c *DBConnector) createLogTable() error {
 	return nil
 }
 
-// Log inserts a new record into the log table
+// Log inserts a new record into the log table with the given check type, result, and parameters
 func (c *DBConnector) Log(checkType string, result bool, params map[string]interface{}) error {
 	db, err := sql.Open("sqlite3", c.dbPath)
 	if err != nil {

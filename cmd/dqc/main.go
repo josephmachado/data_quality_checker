@@ -15,6 +15,7 @@ var (
 	dbPath string
 )
 
+// main is the entry point for the Data Quality Checker CLI application
 func main() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
@@ -42,6 +43,7 @@ func init() {
 	rootCmd.AddCommand(cleanLogsCmd)
 }
 
+// getChecker initializes a new DataQualityChecker with the configured database path
 func getChecker() *checker.DataQualityChecker {
 	connector := db.NewDBConnector(dbPath)
 	return checker.NewDataQualityChecker(connector)
