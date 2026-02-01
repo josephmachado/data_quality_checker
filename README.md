@@ -97,10 +97,10 @@ Referential integrity: True
 Validation History:
 ID    Timestamp                  Check Type                          Result   Additional Params
 ------------------------------------------------------------------------------------------------------------------------
-1     2026-01-19T14:30:45.123456 is_column_unique                    PASS     {'column': 'user_id', 'total_rows': 5, 'unique_rows': 5}
-2     2026-01-19T14:30:45.234567 is_column_not_null                  FAIL     {'column': 'age', 'null_count': 1, 'total_rows': 5}
-3     2026-01-19T14:30:45.345678 is_column_enum                      PASS     {'column': 'status', 'enum_values': ['active', 'inactive', 'pending'], 'invalid_values': None}
-4     2026-01-19T14:30:45.456789 are_tables_referential_integral     PASS     {'join_keys': ['user_id'], 'total_rows': 4, 'matched_rows': 4, 'orphaned_rows': 0}
+1     2026-01-17T14:30:45.123456 is_column_unique                    PASS     {'column': 'user_id', 'total_rows': 5, 'unique_rows': 5}
+2     2026-01-17T14:30:45.234567 is_column_not_null                  FAIL     {'column': 'age', 'null_count': 1, 'total_rows': 5}
+3     2026-01-17T14:30:45.345678 is_column_enum                      PASS     {'column': 'status', 'enum_values': ['active', 'inactive', 'pending'], 'invalid_values': None}
+4     2026-01-17T14:30:45.456789 are_tables_referential_integral     PASS     {'join_keys': ['user_id'], 'total_rows': 4, 'matched_rows': 4, 'orphaned_rows': 0}
 ```
 
 ## API Reference
