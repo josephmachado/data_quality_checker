@@ -172,9 +172,9 @@ Prints all logged validation results in a formatted table.
 graph TB
     User["Data Engineer<br/>[Person]<br/><br/>Validates data quality<br/>using the library"]
     
-    System["Data Quality Checker<br/>[Software System]<br/><br/>Validates Polars DataFrames<br/>and logs results to SQLite"]
+    System["Data Quality Checker<br/>[Software System]<br/><br/>Validates Polars DataFrames<br/>, logs results to SQLite, and returns pass/fail"]
     
-    Database[("SQLite Database<br/>[External System]<br/><br/>Stores validation<br/>results and logs")]
+    Database[("SQLite Database<br/>[External System]<br/><br/>Stores validation<br/>results")]
     
     User -->|Uses| System
     System -->|Reads/Writes| Database
@@ -195,7 +195,7 @@ graph TB
     subgraph System["Data Quality Checker [Software System]"]
         direction TB
         
-        subgraph Checker["DataQualityChecker"]
+        subgraph Checker["DataQualityChecker Class"]
             direction LR
             Method1[is_column_unique]
             Method2[is_column_not_null]
@@ -203,7 +203,7 @@ graph TB
             Method4[are_tables_referential_integral]
         end
         
-        subgraph Connector["DBConnector"]
+        subgraph Connector["DBConnector Class"]
             direction LR
             Log[log]
             Print[print_all_logs]
@@ -214,7 +214,7 @@ graph TB
     
     Database[(SQLite Database<br/>.db file<br/><br/>log table:<br/>id, timestamp,<br/>data_quality_check_type,<br/>result, additional_params)]
     
-    Connector -->|sqlite3| Database
+    Connector -->|To log to | Database
     
     classDef container fill:#438dd5,stroke:#2e6295,color:#fff
     classDef method fill:#85bbf0,stroke:#5d9dd5,color:#000
@@ -280,8 +280,8 @@ uv publish --publish-url https://test.pypi.org/legacy/
 
 ## Requirements
 
-- Python >= 3.8
-- polars >= 0.20.0
+- Python >= 3.13
+- polars >= 1.37.1
 
 ## Contributing
 

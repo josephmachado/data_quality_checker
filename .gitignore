@@ -11,3 +11,6 @@ wheels/
 
 # local sqlite3 db 
 quality_checks.db
+
+# marimo 
+__marimo__
